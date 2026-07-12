@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Param, Post, Res, HttpCode, HttpStatus } from '@nestjs/common';
 import type { Response } from 'express';
+import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
 

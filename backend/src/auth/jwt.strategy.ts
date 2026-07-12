@@ -1,8 +1,8 @@
+import type { Request } from 'express';
 import type { User } from '@/generated/prisma/client';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import type { Request } from 'express';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
 
@@ -16,6 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
+        // eslint-disable-next-line ts/no-unsafe-return
         (request: Request) => request.cookies?.access_token ?? null,
       ]),
       ignoreExpiration: false,

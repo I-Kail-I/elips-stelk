@@ -6,16 +6,22 @@ import { AuthModule } from './auth/auth.module';
 import { MorganMiddleware } from './common/middleware/morgan.middleware';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { HealthController } from './health/health.controller';
+import { MemberModule } from './member/member.module';
 import { isProduction } from './utils/check-env';
 
 @Module({
   imports: [
     // Rate limiting (10 requests per 60s window)
     ThrottlerModule.forRoot([
-      {
-        ttl: 60000,
-        limit: 10,
-      },
+      isProduction
+        ? {
+            ttl: 60000,
+            limit: 10,
+          }
+        : {
+            ttl: 1000,
+            limit: 100,
+          },
     ]),
 
     // Structured logging (Pino + Morgan)
@@ -38,6 +44,7 @@ import { isProduction } from './utils/check-env';
     // Feature modules
     PrismaModule,
     AuthModule,
+    MemberModule,
   ],
   providers: [
     {
