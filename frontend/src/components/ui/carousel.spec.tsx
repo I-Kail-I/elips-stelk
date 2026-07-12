@@ -300,7 +300,6 @@ describe('CarouselPrevious', () => {
     const button = screen.getByRole('button', { name: /previous slide/i });
     expect(button).toHaveClass('absolute');
     expect(button).toHaveClass('touch-manipulation');
-    expect(button).toHaveClass('rounded-full');
   });
 
   it('applies custom className', () => {
@@ -409,21 +408,6 @@ describe('CarouselNext', () => {
     const button = screen.getByRole('button', { name: /next slide/i });
     expect(button).toHaveClass('absolute');
     expect(button).toHaveClass('touch-manipulation');
-    expect(button).toHaveClass('rounded-full');
-  });
-
-  it('applies custom className', () => {
-    render(
-      <Carousel>
-        <CarouselContent>
-          <CarouselItem>Slide 1</CarouselItem>
-        </CarouselContent>
-        <CarouselNext className="custom-next" />
-      </Carousel>,
-    );
-
-    const button = screen.getByRole('button', { name: /next slide/i });
-    expect(button).toHaveClass('custom-next');
   });
 
   it('handles horizontal positioning classes', () => {

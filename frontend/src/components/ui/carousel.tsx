@@ -1,4 +1,3 @@
-/* eslint-disable react/set-state-in-effect */
 'use client';
 
 import type { UseEmblaCarouselType } from 'embla-carousel-react';
@@ -33,7 +32,7 @@ type CarouselContextProps = {
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
 function useCarousel() {
-  const context = React.use(CarouselContext);
+  const context = React.useContext(CarouselContext);
 
   if (!context) {
     throw new Error('useCarousel must be used within a <Carousel />');
@@ -105,7 +104,7 @@ function Carousel({
   }, [api, onSelect]);
 
   return (
-    <CarouselContext
+    <CarouselContext.Provider
       value={{
         carouselRef,
         api,
@@ -127,7 +126,7 @@ function Carousel({
       >
         {children}
       </div>
-    </CarouselContext>
+    </CarouselContext.Provider>
   );
 }
 
@@ -176,7 +175,7 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        'absolute touch-manipulation rounded-full',
+        'absolute touch-manipulation',
         orientation === 'horizontal'
           ? 'inset-y-0 -left-12 my-auto'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -206,7 +205,7 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        'absolute touch-manipulation rounded-full',
+        'absolute touch-manipulation',
         orientation === 'horizontal'
           ? 'inset-y-0 -right-12 my-auto'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',

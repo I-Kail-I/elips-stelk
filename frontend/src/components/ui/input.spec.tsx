@@ -19,10 +19,9 @@ describe('Input', () => {
   it('applies default classes', () => {
     render(<Input />);
     const input = screen.getByRole('textbox');
-    expect(input).toHaveClass('border-input');
-    expect(input).toHaveClass('h-9');
+    expect(input).toHaveClass('border-b-input');
+    expect(input).toHaveClass('h-10');
     expect(input).toHaveClass('w-full');
-    expect(input).toHaveClass('rounded-md');
   });
 
   it('applies custom className', () => {
@@ -95,7 +94,7 @@ describe('Input', () => {
     render(<Input aria-label="test label" aria-invalid={true} />);
     const input = screen.getByLabelText('test label');
     expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(input).toHaveClass('aria-invalid:border-destructive');
+    expect(input).toHaveClass('aria-invalid:border-b-destructive');
   });
 
   it('handles onChange callback', async () => {

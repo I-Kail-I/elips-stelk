@@ -25,15 +25,30 @@ export default function FeaturesCard() {
   ];
 
   return (
-    <section className="bg-accent flex flex-col justify-center p-10 md:h-80 md:flex-row">
-      {iotFeatures.map((feature, key) => (
-        <Features
-          key={key}
-          icon={feature.icon}
-          title={feature.title}
-          description={feature.description}
-        />
-      ))}
+    <section className="bg-muted py-16 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mb-12 max-w-xl">
+          <span className="text-primary mb-2 block text-xs font-bold tracking-[0.2em] uppercase">
+            Program
+          </span>
+          <h2 className="font-heading text-3xl font-bold md:text-4xl">Apa yang akan kamu pelajari</h2>
+          <p className="text-muted-foreground mt-3 leading-relaxed">
+            Dari nol hingga mahir — setiap anggota melewati tiga pilar utama pembelajaran IoT
+            bersama kami.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+          {iotFeatures.map((feature, key) => (
+            <Features
+              key={key}
+              icon={feature.icon}
+              title={feature.title}
+              description={feature.description}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

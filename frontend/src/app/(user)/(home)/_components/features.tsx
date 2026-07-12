@@ -9,16 +9,14 @@ interface FeaturesProps {
 
 export function Features({ icon: Icon, title, description }: FeaturesProps) {
   return (
-    <div className="bg-accent rounded-xl p-6 md:p-10">
-      <div>
-        <div className="border-muted-foreground/60 bg-background w-fit rounded-full border p-3">
-          <Icon size={40} className="text-muted-foreground" />
-        </div>
-
-        <h3 className="text-foreground mt-4 max-w-xs font-serif text-2xl font-bold">{title}</h3>
-
-        <p className="text-muted-foreground mt-2 max-w-sm text-base">{description}</p>
+    <div className="group flex flex-col rounded-2xl border bg-background p-8 shadow-sm transition-all hover:shadow-md">
+      <div className="bg-secondary/10 mb-6 flex h-14 w-14 items-center justify-center rounded-xl">
+        <Icon size={28} className="text-secondary-foreground" />
       </div>
+
+      <h3 className="font-heading text-xl font-bold">{title}</h3>
+
+      <p className="text-muted-foreground mt-3 leading-relaxed">{description}</p>
     </div>
   );
 }

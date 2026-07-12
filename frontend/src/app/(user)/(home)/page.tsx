@@ -6,14 +6,11 @@ import LatestSection from './_sections/latest-section';
 
 export default function Page() {
   return (
-    <div>
+    <>
       <HeroSection />
-
       <AboutSection />
-
       <FeaturesSection />
-
       <LatestSection />
-    </div>
+    </>
   );
 }
