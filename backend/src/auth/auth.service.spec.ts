@@ -1,4 +1,5 @@
 import { ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { comparePassword, hashPassword } from '@/lib/bcrypt';
 import { PrismaService } from '../common/prisma/prisma.service';
@@ -18,6 +19,10 @@ jest.mock('@/lib/bcrypt', () => ({
   hashPassword: jest.fn().mockResolvedValue('hashed-password'),
   comparePassword: jest.fn(),
 }));
+
+const mockJwtService = {
+  sign: jest.fn().mockReturnValue('jwt-token'),
+};
 
 function createMockUser(overrides = {}) {
   return {
@@ -41,7 +46,7 @@ describe('AuthService', () => {
     jest.clearAllMocks();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, PrismaService],
+      providers: [AuthService, PrismaService, { provide: JwtService, useValue: mockJwtService }],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
@@ -76,7 +81,7 @@ describe('AuthService', () => {
       last_name: 'Doe',
     };
 
-    it('should create a user with hashed password and omit password from result', async () => {
+    it('should create a user with hashed password and return user + token', async () => {
       (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
 
       const mockCreatedUser = createMockUser({
@@ -85,17 +90,15 @@ describe('AuthService', () => {
         last_name: dto.last_name,
       });
 
-      const createSpy = jest.spyOn(prisma.user, 'create').mockResolvedValue(mockCreatedUser);
+      jest.spyOn(prisma.user, 'create').mockResolvedValue(mockCreatedUser);
 
       const result = await service.register(dto);
 
-      // Expect the full user object since password is not being omitted
-      expect(result).toEqual(mockCreatedUser);
-
+      expect(result).toEqual({ user: mockCreatedUser, token: 'jwt-token' });
       expect(hashPassword).toHaveBeenCalledWith(dto.password);
-      expect(createSpy).toHaveBeenCalledWith({
-        data: { ...dto, password: 'hashed-password' },
-        omit: { password: true },
+      expect(mockJwtService.sign).toHaveBeenCalledWith({
+        sub: '1',
+        email: 'test@example.com',
       });
     });
 
@@ -110,7 +113,7 @@ describe('AuthService', () => {
   describe('login', () => {
     const loginDto = { email: 'test@example.com', password: '123456' };
 
-    it('should return user without password on valid credentials', async () => {
+    it('should return user without password and token on valid credentials', async () => {
       const user = createMockUser();
 
       (prisma.user.findUnique as jest.Mock).mockResolvedValue(user);
@@ -118,9 +121,13 @@ describe('AuthService', () => {
 
       const result = await service.login(loginDto);
 
-      const { password, ...expectedResult } = user;
-      expect(result).toEqual(expectedResult);
+      const { password, ...userWithoutPassword } = user;
+      expect(result).toEqual({ user: userWithoutPassword, token: 'jwt-token' });
       expect(comparePassword).toHaveBeenCalledWith('123456', 'hashed');
+      expect(mockJwtService.sign).toHaveBeenCalledWith({
+        sub: '1',
+        email: 'test@example.com',
+      });
     });
 
     it('should throw UnauthorizedException when password is incorrect', async () => {

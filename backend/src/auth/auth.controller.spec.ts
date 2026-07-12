@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import type { Response } from 'express';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
@@ -12,6 +13,13 @@ jest.mock('@/common/prisma/prisma.service', () => ({
     },
   })),
 }));
+
+function mockResponse() {
+  const res: Partial<Response> = {};
+  res.cookie = jest.fn().mockReturnValue(res);
+  res.clearCookie = jest.fn().mockReturnValue(res);
+  return res as Response;
+}
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -38,33 +46,44 @@ describe('AuthController', () => {
   });
 
   describe('register', () => {
-    it('should call authService.register and return the result', async () => {
+    it('should set a cookie and return user without token', async () => {
       const dto = {
         email: 'test@example.com',
         password: '123456',
         first_name: 'John',
         last_name: 'Doe',
       };
-      const expected = { email: 'test@example.com', first_name: 'John', last_name: 'Doe' };
-      mockAuthService.register.mockResolvedValue(expected);
+      const res = mockResponse();
+      mockAuthService.register.mockResolvedValue({ user: { email: dto.email, first_name: dto.first_name, last_name: dto.last_name }, token: 'jwt-token' });
 
-      const result = await controller.register(dto);
+      const result = await controller.register(dto, res);
 
-      expect(result).toEqual(expected);
-      expect(mockAuthService.register).toHaveBeenCalledWith(dto);
+      expect(result).toEqual({ user: { email: dto.email, first_name: dto.first_name, last_name: dto.last_name } });
+      expect(res.cookie).toHaveBeenCalledWith('access_token', 'jwt-token', expect.any(Object));
     });
   });
 
   describe('login', () => {
-    it('should call authService.login and return the result', async () => {
+    it('should set a cookie and return user without token', async () => {
       const loginDto = { email: 'test@example.com', password: '123456' };
-      const expected = { email: 'test@example.com' };
-      mockAuthService.login.mockResolvedValue(expected);
+      const res = mockResponse();
+      mockAuthService.login.mockResolvedValue({ user: { email: 'test@example.com' }, token: 'jwt-token' });
 
-      const result = await controller.login(loginDto);
+      const result = await controller.login(loginDto, res);
 
-      expect(result).toEqual(expected);
-      expect(mockAuthService.login).toHaveBeenCalledWith(loginDto);
+      expect(result).toEqual({ user: { email: 'test@example.com' } });
+      expect(res.cookie).toHaveBeenCalledWith('access_token', 'jwt-token', expect.any(Object));
+    });
+  });
+
+  describe('logout', () => {
+    it('should clear the cookie', async () => {
+      const res = mockResponse();
+
+      const result = await controller.logout(res);
+
+      expect(result).toEqual({ message: 'Logged out successfully' });
+      expect(res.clearCookie).toHaveBeenCalledWith('access_token', { path: '/' });
     });
   });
 
