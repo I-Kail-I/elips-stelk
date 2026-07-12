@@ -7,7 +7,7 @@ export default function LatestSection() {
       <div className="absolute inset-0 -z-10">
         <div className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
         <div className="absolute -left-24 bottom-0 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[40px_40px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-size-[40px_40px]" />
       </div>
       <div className="mx-auto max-w-6xl">
         <div className="mb-12 border-b pb-6 md:mb-16">

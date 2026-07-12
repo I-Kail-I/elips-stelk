@@ -10,8 +10,8 @@ interface FeaturesProps {
 export function Features({ icon: Icon, title, description }: FeaturesProps) {
   return (
     <div className="group flex flex-col rounded-2xl border bg-background p-8 shadow-sm transition-all hover:shadow-md">
-      <div className="bg-secondary/10 mb-6 flex h-14 w-14 items-center justify-center rounded-xl">
-        <Icon size={28} className="text-secondary-foreground" />
+      <div className="bg-primary/10 mb-6 flex h-14 w-14 items-center justify-center rounded-xl">
+        <Icon size={28} className="text-primary" />
       </div>
 
       <h3 className="font-heading text-xl font-bold">{title}</h3>

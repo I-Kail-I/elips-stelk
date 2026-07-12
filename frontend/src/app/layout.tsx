@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Libre_Franklin, PT_Serif, Space_Mono } from 'next/font/google';
+import AppLayout from '@/components/layout/layout';
 import { Providers } from '@/components/provider';
+import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import './globals.css';
 
@@ -31,10 +33,29 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn('h-full', 'antialiased', libreFranklin.variable, ptSerif.variable, spaceMono.variable, 'font-sans')}
+      className={cn(
+        'h-full',
+        'antialiased',
+        libreFranklin.variable,
+        ptSerif.variable,
+        spaceMono.variable,
+        'font-sans',
+      )}
+      suppressHydrationWarning
     >
       <Providers>
-        <body className="flex min-h-full flex-col">{children}</body>
+        <body className="flex min-h-full flex-col">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Providers>
+              <AppLayout>{children}</AppLayout>
+            </Providers>
+          </ThemeProvider>
+        </body>
       </Providers>
     </html>
   );
