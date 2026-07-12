@@ -1,0 +1,83 @@
+name: Run Tests
+on: [push, pull_request]
+
+jobs:
+  root:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix backend
+          npm ci --prefix frontend
+
+      - name: Cache node_modules
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            backend/node_modules
+            frontend/node_modules
+          key: ${{ runner.os }}-node-modules-${{ github.sha }}
+
+  backend:
+    needs: root
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            backend/node_modules
+            frontend/node_modules
+          key: ${{ runner.os }}-node-modules-${{ github.sha }}
+          fail-on-cache-miss: true
+
+      - run: npm run db:generate
+      - run: npm run lint
+      - run: npm test
+
+  frontend:
+    needs: root
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            backend/node_modules
+            frontend/node_modules
+          key: ${{ runner.os }}-node-modules-${{ github.sha }}
+          fail-on-cache-miss: true
+
+      - run: npm run lint
+      - run: npm test

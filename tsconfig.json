@@ -1,0 +1,6 @@
+{
+  "references": [{ "path": "./frontend" }, { "path": "./backend" }],
+  "files": [],
+  "include": ["frontend/**/*.ts", "frontend/**/*.tsx", "frontend/**/*.mts", "backend/**/*.ts"],
+  "exclude": ["node_modules", "dist", ".next"]
+}
