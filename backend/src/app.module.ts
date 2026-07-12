@@ -8,6 +8,7 @@ import { PrismaModule } from './common/prisma/prisma.module';
 import { HealthController } from './health/health.controller';
 import { MemberModule } from './member/member.module';
 import { isProduction } from './utils/check-env';
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { isProduction } from './utils/check-env';
     PrismaModule,
     AuthModule,
     MemberModule,
+    ActivityModule,
   ],
   providers: [
     {

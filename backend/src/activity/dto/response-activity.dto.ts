@@ -1,17 +1,17 @@
 import { Expose } from 'class-transformer';
 
-export class ResponseMemberDto {
+export class ResponseActivityDto {
   @Expose()
   id!: number;
 
   @Expose()
-  name!: string;
+  title!: string;
 
   @Expose()
-  role!: string;
+  description!: string;
 
   @Expose()
-  message!: string;
+  markdown_file!: string;
 
   @Expose()
   created_at!: Date;
