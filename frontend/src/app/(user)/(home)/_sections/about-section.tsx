@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 const stats = [
@@ -45,7 +46,7 @@ export default function AboutSection() {
               kenyataan.
             </p>
 
-            <div className="mt-8 grid grid-cols-3 gap-6 border-t pt-8">
+            <div className="mt-8 grid grid-cols-3 gap-6 border-t border-border/30 pt-8">
               {stats.map((s) => (
                 <div key={s.label}>
                   <p className="font-heading text-2xl font-bold">{s.value}</p>
@@ -55,9 +56,11 @@ export default function AboutSection() {
             </div>
 
             <div className="mt-8">
-              <button className="text-foreground w-fit cursor-pointer border-b border-dotted pb-0.5 text-base font-medium transition-colors hover:border-primary hover:text-primary">
-                Learn More
-              </button>
+              <Link href="/visi-dan-misi">
+                <button className="text-foreground hover:border-primary hover:text-primary w-fit cursor-pointer border-b border-dotted pb-0.5 text-base font-medium transition-colors">
+                  Learn More
+                </button>
+              </Link>
             </div>
           </div>
         </div>

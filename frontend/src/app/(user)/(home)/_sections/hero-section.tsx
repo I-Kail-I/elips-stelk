@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { HeroSlider } from '../_components/hero-slider';
@@ -27,17 +28,19 @@ export default function HeroSection() {
 
           <div className="flex w-full max-w-md flex-col items-center gap-6 md:mt-6 md:items-start">
             <p className="text-muted-foreground text-center text-base leading-relaxed md:text-left md:text-lg">
-              Eskul IoT kami menjadi wadah bagi siswa untuk mengeksplorasi sensor, mikrokontroler, dan
-              otomasi cerdas guna membangun inovasi nyata.
+              Eskul IoT kami menjadi wadah bagi siswa untuk mengeksplorasi sensor, mikrokontroler,
+              dan otomasi cerdas guna membangun inovasi nyata.
             </p>
 
-            <Button size="lg" className="w-fit cursor-pointer" variant="default">
-              Explore more
-            </Button>
+            <Link href="/aktivitas">
+              <Button size="lg" className="w-fit cursor-pointer" variant="default">
+                Explore more
+              </Button>
+            </Link>
           </div>
         </div>
 
-        <div className="mt-16 grid grid-cols-3 gap-8 border-y py-8 md:gap-16">
+        <div className="mt-16 grid grid-cols-3 gap-8 border-y border-border/30 py-8 md:gap-16">
           {stats.map((s) => (
             <div key={s.label}>
               <p className="font-heading text-2xl font-bold md:text-3xl">{s.value}</p>
