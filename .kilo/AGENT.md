@@ -309,7 +309,7 @@ overwrites the original file. Human-readable backup saved as FILE.original.md.
 Trigger: /caveman-compress FILEPATH or "compress memory file"
 ---
 
-# Caveman Compress
+## Caveman Compress
 
 ## Purpose
 
