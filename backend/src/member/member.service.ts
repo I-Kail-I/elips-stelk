@@ -1,7 +1,7 @@
+import type { ResponseMemberDto } from './dto/response-member.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { CreateMemberDto } from './dto/create-member.dto';
-import { ResponseMemberDto } from './dto/response-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 
 @Injectable()

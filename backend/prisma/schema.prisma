@@ -29,7 +29,7 @@ model User {
   @@schema("auth")
 }
 
-model activities {
+model activity {
   id            Int       @id @default(autoincrement())
   title         String
   description   String
@@ -37,7 +37,7 @@ model activities {
   created_at    DateTime  @default(now())
   updated_at    DateTime? @updatedAt
 
-  @@map("activity")
+  @@map("activities")
   @@schema("public")
 }
 
