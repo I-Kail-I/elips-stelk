@@ -15,30 +15,31 @@ export function HeroSlider() {
   const images = ['/home/IMG_4252.JPG', '/home/IMG_4253.JPG', '/home/IMG_4254.JPG', '/home/IMG_4255.JPG'];
 
   return (
-    <div>
+    <div className="w-full">
       {/* Carousel Section */}
-      <div className="relative mt-10 w-full flex-1">
+      <div className="relative mt-10 w-full">
         <Carousel
           opts={{
             loop: true,
+            watchDrag: true,
           }}
           plugins={[
             Autoplay({
               delay: 4000,
+              stopOnInteraction: false,
             }),
           ]}
           className="mx-auto h-full w-full max-w-7xl px-12 md:px-0"
         >
-          <CarouselContent className="h-full">
+          <CarouselContent>
             {images.map((src, index) => (
-              <CarouselItem key={index} className="relative h-full w-full">
-                {/* Changed to arbitrary Tailwind values for guaranteed rendering */}
-                <div className="relative h-full min-h-75 w-full md:min-h-112.5">
+              <CarouselItem key={index}>
+                <div className="relative min-h-[300px] w-full md:min-h-[450px]">
                   <Image
                     src={src}
                     alt={`Slider image ${index + 1}`}
                     fill
-                    className="object-contain"
+                    className="object-cover"
                     priority={index === 0}
                   />
                 </div>
@@ -46,8 +47,8 @@ export function HeroSlider() {
             ))}
           </CarouselContent>
 
-          <CarouselPrevious className="left-4 hidden md:flex" />
-          <CarouselNext className="right-4 hidden md:flex" />
+          <CarouselPrevious className="left-4 z-10" />
+          <CarouselNext className="right-4 z-10" />
         </Carousel>
       </div>
     </div>

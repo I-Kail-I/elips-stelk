@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Libre_Franklin, PT_Serif } from 'next/font/google';
+import { Libre_Franklin, PT_Serif, Space_Mono } from 'next/font/google';
 import { Providers } from '@/components/provider';
 import { cn } from '@/lib/utils';
 import './globals.css';
@@ -10,6 +10,12 @@ const ptSerif = PT_Serif({
   weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-serif',
+});
+
+const spaceMono = Space_Mono({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-mono',
 });
 
 export const metadata: Metadata = {
@@ -25,10 +31,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn('h-full', 'antialiased', libreFranklin.variable, ptSerif.variable, 'font-sans')}
+      className={cn('h-full', 'antialiased', libreFranklin.variable, ptSerif.variable, spaceMono.variable, 'font-sans')}
     >
       <Providers>
-        <body className="flex min-h-full flex-col py-5">{children}</body>
+        <body className="flex min-h-full flex-col">{children}</body>
       </Providers>
     </html>
   );

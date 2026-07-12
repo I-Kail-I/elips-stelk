@@ -1,6 +1,5 @@
 import { ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Role } from '@/generated/prisma/enums';
 import { comparePassword, hashPassword } from '@/lib/bcrypt';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { AuthService } from './auth.service';
@@ -27,7 +26,6 @@ function createMockUser(overrides = {}) {
     password: 'hashed',
     first_name: 'John',
     last_name: 'Doe',
-    role: 'USER' as Role,
     is_active: true,
     created_at: new Date(),
     updated_at: new Date(),
