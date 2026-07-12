@@ -2,13 +2,13 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
+import { ActivityModule } from './activity/activity.module';
 import { AuthModule } from './auth/auth.module';
 import { MorganMiddleware } from './common/middleware/morgan.middleware';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { HealthController } from './health/health.controller';
 import { MemberModule } from './member/member.module';
 import { isProduction } from './utils/check-env';
-import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [

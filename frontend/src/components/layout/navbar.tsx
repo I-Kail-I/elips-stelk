@@ -1,12 +1,12 @@
 'use client';
 
+import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { ModeToggle } from '../ui/mode-toggle';
-import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [screenIsMoving, setScreenIsMoving] = useState(false);
@@ -23,6 +23,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (window.scrollY >= 5) {
+      // eslint-disable-next-line react/set-state-in-effect
       setScreenIsMoving(true);
     }
 
@@ -36,6 +37,7 @@ export default function Navbar() {
 
   // Close mobile menu on route change
   useEffect(() => {
+    // eslint-disable-next-line react/set-state-in-effect
     setIsMobileMenuOpen(false);
   }, [route]);
 
