@@ -72,15 +72,26 @@ export default function LatestSection() {
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:gap-6">
           {data && Array.isArray(data) && data.length > 0 ? (
-            data.map((activity) => (
-              <LatestActivity
-                key={activity.title} // or use activity.created_at?.toString()
-                title={activity.title}
-                date={new Date(activity.created_at).getFullYear().toString()}
-                link={activity.markdown_file}
-                image={activity.image}
-              />
-            ))
+            data.map((activity) => {
+              const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+              const imagePath = activity.image?.[0];
+
+              const imageUrl = imagePath
+                ? imagePath.startsWith('http')
+                  ? imagePath
+                  : `${API_BASE_URL}/${imagePath}`
+                : "";
+
+              return (
+                <LatestActivity
+                  key={activity.id}
+                  title={activity.title}
+                  date={new Date(activity.created_at).getFullYear().toString()}
+                  link={activity.markdown_file}
+                  image={imageUrl}
+                />
+              );
+            })
           ) : (
             <p className="text-muted-foreground col-span-full py-8 text-center">
               No activities found
