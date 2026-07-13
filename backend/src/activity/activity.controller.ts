@@ -1,5 +1,5 @@
 import { extname } from 'node:path';
-import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
@@ -12,8 +12,16 @@ export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
   @Get()
-  async findAll() {
-    return this.activityService.findAll();
+  async findAll(
+    @Query('limit') limit?: string,
+    @Query('sort') sort?: string,
+    @Query('order') order?: string,
+  ) {
+    return this.activityService.findAll({
+      limit: (limit != null) ? parseInt(limit, 10) : undefined,
+      sort,
+      order,
+    });
   }
 
   @Get(':id')

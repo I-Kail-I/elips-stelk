@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from './footer';
 import Navbar from './navbar';
+import PageTransition from './page-transition';
 
 export default function AppLayout({
   children,
@@ -9,8 +10,10 @@ export default function AppLayout({
 }>) {
   return (
     <>
-      <Navbar />
-      <div className="mt-20">{children}</div>
+      <PageTransition>
+        <Navbar />
+        <div className="mt-20">{children}</div>
+      </PageTransition>
       <Footer />
     </>
   );

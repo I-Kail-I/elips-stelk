@@ -67,8 +67,8 @@ export default function Navbar() {
       >
         {/* Logo */}
         <Link className="flex w-full max-w-50 items-center justify-start gap-3" href="/">
-          <Image src="/ELIPS.jpeg" width="40" height="40" alt="ELIPS Logo" priority />
-          <span className="text-foreground font-mono text-lg md:text-xl">Elips ORG</span>
+          <Image src="/ELIPS.jpeg" width={40} height={40} alt="ELIPS Logo" priority />
+          <span className="text-foreground font-serif text-lg md:text-xl">Elips ORG</span>
         </Link>
 
         {/* Desktop Navigation */}

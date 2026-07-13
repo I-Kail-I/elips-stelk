@@ -34,7 +34,7 @@ export function HeroSlider() {
           <CarouselContent>
             {images.map((src, index) => (
               <CarouselItem key={index}>
-                <div className="relative min-h-[300px] w-full md:min-h-[450px]">
+                <div className="relative min-h-75 w-full md:min-h-112.5">
                   <Image
                     src={src}
                     alt={`Slider image ${index + 1}`}

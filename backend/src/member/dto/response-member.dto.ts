@@ -17,6 +17,12 @@ export class ResponseMemberDto {
   image!: string[];
 
   @Expose()
+  is_leader_active!: boolean;
+
+  @Expose()
+  is_tamat!: boolean;
+
+  @Expose()
   created_at!: Date;
 
   @Expose()
