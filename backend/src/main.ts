@@ -28,13 +28,6 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors({
-    origin: process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Accept, Authorization',
-    credentials: true,
-  });
-
   // Serve uploaded files statically
   app.useStaticAssets(join(__dirname, '..', 'uploads_folder'), {
     prefix: '/api/uploads/',

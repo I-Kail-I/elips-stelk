@@ -9,6 +9,7 @@ import { PrismaModule } from './common/prisma/prisma.module';
 import { FilesController } from './files/files.controller';
 import { HealthController } from './health/health.controller';
 import { MemberModule } from './member/member.module';
+import { UserModule } from './user/user.module';
 import { isProduction } from './utils/check-env';
 
 @Module({
@@ -48,6 +49,7 @@ import { isProduction } from './utils/check-env';
     AuthModule,
     MemberModule,
     ActivityModule,
+    UserModule,
   ],
   providers: [
     {

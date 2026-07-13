@@ -1,8 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { Prisma } from '@/generated/prisma/client';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { ResponseActivityDto } from './dto/response-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
+
+interface FindAllParams {
+  limit?: number;
+  sort?: string;
+  order?: string;
+}
 
 @Injectable()
 export class ActivityService {
@@ -15,8 +22,20 @@ export class ActivityService {
     });
   }
 
-  async findAll(): Promise<ResponseActivityDto[]> {
-    return this.prisma.activity.findMany();
+  async findAll(params?: FindAllParams): Promise<ResponseActivityDto[]> {
+    const { limit, sort, order } = params ?? {};
+
+    const orderBy: Prisma.ActivityOrderByWithRelationInput = {};
+    if (sort != null) {
+      (orderBy as Record<string, string>)[sort] = order ?? 'desc';
+    } else {
+      orderBy.created_at = 'desc';
+    }
+
+    return this.prisma.activity.findMany({
+      orderBy,
+      ...((limit != null) ? { take: limit } : {}),
+    });
   }
 
   async findOne(id: number): Promise<ResponseActivityDto> {
