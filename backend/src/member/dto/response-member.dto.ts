@@ -14,6 +14,9 @@ export class ResponseMemberDto {
   message!: string;
 
   @Expose()
+  image!: string[];
+
+  @Expose()
   created_at!: Date;
 
   @Expose()

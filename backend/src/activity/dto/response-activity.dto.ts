@@ -14,6 +14,9 @@ export class ResponseActivityDto {
   markdown_file!: string;
 
   @Expose()
+  image!: string[];
+
+  @Expose()
   created_at!: Date;
 
   @Expose()

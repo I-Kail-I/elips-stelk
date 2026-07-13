@@ -29,11 +29,12 @@ model User {
   @@schema("auth")
 }
 
-model activity {
+model Activity {
   id            Int       @id @default(autoincrement())
   title         String
   description   String
   markdown_file String    @db.Text
+  image         String[]  @db.Text
   created_at    DateTime  @default(now())
   updated_at    DateTime? @updatedAt
 
@@ -41,11 +42,12 @@ model activity {
   @@schema("public")
 }
 
-model member {
+model Member {
   id         Int        @id @default(autoincrement())
   name       String
   role       MemberRole
   message    String     @db.Text
+  image      String[]   @db.Text
   created_at DateTime   @default(now())
   updated_at DateTime?  @updatedAt
 

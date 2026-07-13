@@ -45,12 +45,15 @@ services:
       - NODE_ENV=${NODE_ENV}
       - FRONTEND_URL=${FRONTEND_URL}
       - REDIS_URL=${REDIS_URL}
+      - BACKEND_URL=${BACKEND_URL}
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:' + process.env.PORT + '/api/health', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
       interval: 30s
       timeout: 3s
       retries: 3
       start_period: 5s
+    volumes:
+      - uploads_folder:/app/uploads_folder
 
   frontend:
     build:
@@ -74,3 +77,4 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  uploads_folder:

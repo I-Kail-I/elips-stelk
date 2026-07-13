@@ -9,6 +9,7 @@ jest.mock('@/common/prisma/prisma.service', () => ({
       create: jest.fn(),
       findMany: jest.fn(),
       findFirst: jest.fn(),
+      findUnique: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
     },
@@ -19,8 +20,9 @@ function createMockActivity(overrides = {}) {
   return {
     id: 1,
     title: 'Test Activity',
-    description: 'Activity description',
-    markdown_file: '# Markdown content',
+    description: 'Test Description',
+    date: new Date(),
+    image: [],
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
@@ -30,8 +32,9 @@ function createMockActivity(overrides = {}) {
 function createMockCreateActivityDto(overrides = {}) {
   return {
     title: 'Test Activity',
-    description: 'Activity description',
-    markdown_file: '# Markdown content',
+    description: 'Test Description',
+    date: new Date(),
+    image: [],
     ...overrides,
   };
 }
@@ -39,8 +42,9 @@ function createMockCreateActivityDto(overrides = {}) {
 function createMockUpdateActivityDto(overrides = {}) {
   return {
     title: 'Updated Activity',
-    description: 'Updated description',
-    markdown_file: '# Updated content',
+    description: 'Updated Description',
+    date: new Date(),
+    image: [],
     ...overrides,
   };
 }
@@ -81,9 +85,8 @@ describe('ActivityService', () => {
 
     it('should create activity with all provided fields', async () => {
       const createActivityDto = createMockCreateActivityDto({
-        title: 'Workshop',
-        description: 'A coding workshop',
-        markdown_file: '# Workshop content',
+        title: 'Special Activity',
+        description: 'A very special activity',
       });
 
       const mockCreatedActivity = createMockActivity(createActivityDto);
@@ -92,9 +95,8 @@ describe('ActivityService', () => {
 
       const result = await service.create(createActivityDto);
 
-      expect(result.title).toBe('Workshop');
-      expect(result.description).toBe('A coding workshop');
-      expect(result.markdown_file).toBe('# Workshop content');
+      expect(result.title).toBe('Special Activity');
+      expect(result.description).toBe('A very special activity');
     });
   });
 
@@ -128,18 +130,18 @@ describe('ActivityService', () => {
   describe('findOne', () => {
     it('should return an activity when found', async () => {
       const activity = createMockActivity({ id: 1 });
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(activity);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(activity);
 
       const result = await service.findOne(1);
 
       expect(result).toEqual(activity);
-      expect(prisma.activity.findFirst).toHaveBeenCalledWith({
+      expect(prisma.activity.findUnique).toHaveBeenCalledWith({
         where: { id: 1 },
       });
     });
 
     it('should throw NotFoundException when activity is not found', async () => {
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(null);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(null);
 
       await expect(service.findOne(999)).rejects.toThrow(NotFoundException);
       await expect(service.findOne(999)).rejects.toThrow('Activity tidak ditemukan');
@@ -147,7 +149,7 @@ describe('ActivityService', () => {
 
     it('should find activity with specific id', async () => {
       const activity = createMockActivity({ id: 5, title: 'Specific Activity' });
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(activity);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(activity);
 
       const result = await service.findOne(5);
 
@@ -162,7 +164,7 @@ describe('ActivityService', () => {
       const updateActivityDto = createMockUpdateActivityDto();
       const updatedActivity = createMockActivity({ id: 1, ...updateActivityDto });
 
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(existingActivity);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(existingActivity);
       jest.spyOn(prisma.activity, 'update').mockResolvedValue(updatedActivity);
 
       const result = await service.update(1, updateActivityDto);
@@ -176,7 +178,7 @@ describe('ActivityService', () => {
 
     it('should throw NotFoundException when updating non-existent activity', async () => {
       const updateActivityDto = createMockUpdateActivityDto();
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(null);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(null);
 
       await expect(service.update(999, updateActivityDto)).rejects.toThrow(NotFoundException);
       expect(prisma.activity.update).not.toHaveBeenCalled();
@@ -187,7 +189,7 @@ describe('ActivityService', () => {
       const partialUpdate = { title: 'Updated Title' };
       const updatedActivity = createMockActivity({ id: 1, title: 'Updated Title' });
 
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(existingActivity);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(existingActivity);
       jest.spyOn(prisma.activity, 'update').mockResolvedValue(updatedActivity);
 
       const result = await service.update(1, partialUpdate);
@@ -204,7 +206,7 @@ describe('ActivityService', () => {
     it('should delete and return the activity', async () => {
       const activity = createMockActivity({ id: 1 });
 
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(activity);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(activity);
       jest.spyOn(prisma.activity, 'delete').mockResolvedValue(activity);
 
       const result = await service.remove(1);
@@ -216,7 +218,7 @@ describe('ActivityService', () => {
     });
 
     it('should throw NotFoundException when deleting non-existent activity', async () => {
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(null);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(null);
 
       await expect(service.remove(999)).rejects.toThrow(NotFoundException);
       expect(prisma.activity.delete).not.toHaveBeenCalled();
@@ -225,7 +227,7 @@ describe('ActivityService', () => {
     it('should delete the correct activity by id', async () => {
       const activity = createMockActivity({ id: 2, title: 'Activity to delete' });
 
-      (prisma.activity.findFirst as jest.Mock).mockResolvedValue(activity);
+      (prisma.activity.findUnique as jest.Mock).mockResolvedValue(activity);
       jest.spyOn(prisma.activity, 'delete').mockResolvedValue(activity);
 
       const result = await service.remove(2);
