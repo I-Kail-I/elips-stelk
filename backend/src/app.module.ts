@@ -6,6 +6,7 @@ import { ActivityModule } from './activity/activity.module';
 import { AuthModule } from './auth/auth.module';
 import { MorganMiddleware } from './common/middleware/morgan.middleware';
 import { PrismaModule } from './common/prisma/prisma.module';
+import { FilesController } from './files/files.controller';
 import { HealthController } from './health/health.controller';
 import { MemberModule } from './member/member.module';
 import { isProduction } from './utils/check-env';
@@ -54,7 +55,7 @@ import { isProduction } from './utils/check-env';
       useClass: ThrottlerGuard,
     },
   ],
-  controllers: [HealthController],
+  controllers: [HealthController, FilesController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

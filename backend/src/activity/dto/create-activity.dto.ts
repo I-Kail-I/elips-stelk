@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateActivityDto {
   @ApiProperty()
@@ -11,6 +11,12 @@ export class CreateActivityDto {
   @IsString()
   @IsNotEmpty()
   description!: string;
+
+  @ApiPropertyOptional({ type: [String] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  image?: string[];
 
   @ApiProperty()
   @IsString()

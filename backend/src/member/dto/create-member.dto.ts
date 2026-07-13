@@ -1,10 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-
-export enum MemberRole {
-  KETUA = 'ketua',
-  ANGGOTA = 'anggota',
-}
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsArray, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { MemberRole } from '@/generated/prisma/enums';
 
 export class CreateMemberDto {
   @ApiProperty()
@@ -12,7 +8,7 @@ export class CreateMemberDto {
   @IsNotEmpty()
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: MemberRole })
   @IsEnum(MemberRole)
   @IsNotEmpty()
   role!: MemberRole;
@@ -21,4 +17,10 @@ export class CreateMemberDto {
   @IsString()
   @IsNotEmpty()
   message!: string;
+
+  @ApiPropertyOptional({ type: [String] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  image?: string[];
 }
