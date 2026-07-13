@@ -1,5 +1,17 @@
 import { extname } from 'node:path';
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
@@ -18,7 +30,7 @@ export class ActivityController {
     @Query('order') order?: string,
   ) {
     return this.activityService.findAll({
-      limit: (limit != null) ? parseInt(limit, 10) : undefined,
+      limit: limit != null ? parseInt(limit, 10) : undefined,
       sort,
       order,
     });
@@ -48,7 +60,7 @@ export class ActivityController {
     @UploadedFiles() files?: Express.Multer.File[],
   ) {
     if (files && files.length > 0) {
-      createActivityDto.image = files.map(file => file.path);
+      createActivityDto.image = files.map((file) => file.path);
     }
     return this.activityService.create(createActivityDto);
   }
@@ -73,7 +85,7 @@ export class ActivityController {
     @UploadedFiles() files?: Express.Multer.File[],
   ) {
     if (files && files.length > 0) {
-      updateActivityDto.image = files.map(file => file.path);
+      updateActivityDto.image = files.map((file) => file.path);
     }
     return this.activityService.update(+id, updateActivityDto);
   }

@@ -75,7 +75,10 @@ export function Pagination({
 
       {pages.map((page, idx) =>
         page === '...' ? (
-          <span key={`dots-${idx}`} className="text-muted-foreground/50 flex h-9 w-9 items-center justify-center text-sm">
+          <span
+            key={`dots-${idx}`}
+            className="text-muted-foreground/50 flex h-9 w-9 items-center justify-center text-sm"
+          >
             ...
           </span>
         ) : (

@@ -11,7 +11,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-border/20 bg-muted px-6 py-12 font-sans text-muted-foreground md:px-12">
+    <footer className="border-border/20 bg-muted text-muted-foreground border-t px-6 py-12 font-sans md:px-12">
       <div className="mx-auto max-w-7xl">
         {/* Top Section */}
         <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
 
         {/* Map Section */}
-        <div className="mb-8 h-70 w-full overflow-hidden rounded-xl border border-border/20 bg-card shadow-sm">
+        <div className="border-border/20 bg-card mb-8 h-70 w-full overflow-hidden rounded-xl border shadow-sm">
           <iframe
             title="Lokasi Elips"
             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15894.395540338895!2d119.4376231!3d-5.1680436!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbee32da1a075d3%3A0x88e9cc6030cfa1dd!2sSMK%20TELKOM%20Makassar!5e0!3m2!1sen!2sid!4v1783846642787!5m2!1sen!2sid"
@@ -95,9 +95,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col items-center justify-between border-t border-border/10 pt-6 text-xs text-muted-foreground md:flex-row">
+        <div className="border-border/10 text-muted-foreground flex flex-col items-center justify-between border-t pt-6 text-xs md:flex-row">
           <p>© {currentYear} ELIPS. All rights reserved.</p>
-          <Link href="/" className="mt-4 transition-colors hover:text-foreground md:mt-0">
+          <Link href="/" className="hover:text-foreground mt-4 transition-colors md:mt-0">
             elips-iot.id
           </Link>
         </div>

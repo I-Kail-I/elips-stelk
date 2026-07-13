@@ -114,19 +114,27 @@ describe('ActivityController', () => {
     });
 
     it('should create activity with uploaded image files', async () => {
-      const createActivityDto: CreateActivityDto = createMockCreateActivityDto({ image: undefined });
+      const createActivityDto: CreateActivityDto = createMockCreateActivityDto({
+        image: undefined,
+      });
       const mockFiles = [
         createMockUploadedFile({ path: 'uploads_folder/images-abc.jpg' }),
         createMockUploadedFile({ path: 'uploads_folder/images-def.jpg' }),
       ];
-      const expectedData = { ...createActivityDto, image: ['uploads_folder/images-abc.jpg', 'uploads_folder/images-def.jpg'] };
+      const expectedData = {
+        ...createActivityDto,
+        image: ['uploads_folder/images-abc.jpg', 'uploads_folder/images-def.jpg'],
+      };
       const expectedResult = createMockActivity(expectedData);
 
       jest.spyOn(activityService, 'create').mockResolvedValue(expectedResult);
 
       const result = await controller.create(createActivityDto, mockFiles);
 
-      expect(result.image).toEqual(['uploads_folder/images-abc.jpg', 'uploads_folder/images-def.jpg']);
+      expect(result.image).toEqual([
+        'uploads_folder/images-abc.jpg',
+        'uploads_folder/images-def.jpg',
+      ]);
       expect(activityService.create).toHaveBeenCalledWith(expectedData);
     });
 
@@ -230,10 +238,10 @@ describe('ActivityController', () => {
 
     it('should update an activity with uploaded image files', async () => {
       const activityId = '1';
-      const updateActivityDto: UpdateActivityDto = createMockUpdateActivityDto({ image: undefined });
-      const mockFiles = [
-        createMockUploadedFile({ path: 'uploads_folder/images-new.jpg' }),
-      ];
+      const updateActivityDto: UpdateActivityDto = createMockUpdateActivityDto({
+        image: undefined,
+      });
+      const mockFiles = [createMockUploadedFile({ path: 'uploads_folder/images-new.jpg' })];
       const expectedData = { ...updateActivityDto, image: ['uploads_folder/images-new.jpg'] };
       const expectedResult = createMockActivity({ id: 1, ...expectedData });
 
