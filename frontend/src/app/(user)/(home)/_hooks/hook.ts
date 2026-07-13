@@ -4,7 +4,13 @@ import { ActivitySchema } from '../activity.dto';
 
 export async function fetchActivity(): Promise<ActivityType> {
   try {
-    const activity = await axiosInstance.get('/activity');
+    const activity = await axiosInstance.get('/activity', {
+      params: {
+        limit: 6,
+        sort: 'created_at',
+        order: 'desc',
+      },
+    });
 
     const validateActivity = ActivitySchema.parse(activity.data);
 
