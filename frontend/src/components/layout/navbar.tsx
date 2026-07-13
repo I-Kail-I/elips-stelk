@@ -60,7 +60,7 @@ export default function Navbar() {
           screenIsMoving
             ? 'bg-primary/40 dark:bg-primary/30 top-5 right-5 left-5 h-20 rounded-full backdrop-blur-2xl dark:backdrop-blur-2xl'
             : 'bg-primary dark:bg-primary/80 top-0 right-0 left-0 h-20'
-        }`}
+        } ${isMobileMenuOpen ? 'pointer-events-none -translate-y-full opacity-0' : 'opacity-100'}`}
         style={{
           width: screenIsMoving ? 'calc(100% - 40px)' : '100%',
         }}
