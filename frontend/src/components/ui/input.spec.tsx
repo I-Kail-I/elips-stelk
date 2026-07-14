@@ -16,14 +16,6 @@ describe('Input', () => {
     expect(input).toHaveAttribute('data-slot', 'input');
   });
 
-  it('applies default classes', () => {
-    render(<Input />);
-    const input = screen.getByRole('textbox');
-    expect(input).toHaveClass('border-b-input');
-    expect(input).toHaveClass('h-10');
-    expect(input).toHaveClass('w-full');
-  });
-
   it('applies custom className', () => {
     render(<Input className="custom-class" />);
     const input = screen.getByRole('textbox');

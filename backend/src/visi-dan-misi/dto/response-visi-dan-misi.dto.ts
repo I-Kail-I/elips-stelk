@@ -2,6 +2,9 @@ import { Expose } from 'class-transformer';
 
 export class ResponseVisiDanMisiDto {
   @Expose()
+  id!: number;
+
+  @Expose()
   visi!: string;
 
   @Expose()

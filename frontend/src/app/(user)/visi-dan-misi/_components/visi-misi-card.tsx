@@ -10,7 +10,10 @@ interface VisiMisiCardProps {
 }
 
 function parseMisiItems(misi: string): string[] {
-  const items = misi.split('\n').map((s) => s.trim()).filter(Boolean);
+  const items = misi
+    .split('\n')
+    .map((s) => s.trim())
+    .filter(Boolean);
   return items.length > 1 ? items : [misi];
 }
 
@@ -31,11 +34,15 @@ export function VisiMisiCard({ visi, misi, tahunMulai, tahunAkhir }: VisiMisiCar
       <div className="my-14 md:my-18">
         <div className="relative flex items-center justify-between">
           <div className="bg-primary z-10 flex h-8 w-8 items-center justify-center rounded-full">
-            <span className="text-primary-foreground text-xs font-bold">{String(tahunMulai).slice(2)}</span>
+            <span className="text-primary-foreground text-xs font-bold">
+              {String(tahunMulai).slice(2)}
+            </span>
           </div>
-          <div className="bg-primary/20 absolute left-4 right-4 h-0.5" />
+          <div className="bg-primary/20 absolute right-4 left-4 h-0.5" />
           <div className="bg-primary z-10 flex h-8 w-8 items-center justify-center rounded-full">
-            <span className="text-primary-foreground text-xs font-bold">{String(tahunAkhir).slice(2)}</span>
+            <span className="text-primary-foreground text-xs font-bold">
+              {String(tahunAkhir).slice(2)}
+            </span>
           </div>
         </div>
         <p className="text-muted-foreground/60 mt-2 text-center text-xs font-medium tracking-wider uppercase">
@@ -68,7 +75,7 @@ export function VisiMisiCardSkeleton() {
       <Skeleton className="h-8 w-3/4 md:h-10" />
       <Skeleton className="mt-2 h-8 w-2/3 md:h-10" />
 
-      <div className="my-14 md:my-18 flex w-full items-center justify-between">
+      <div className="my-14 flex w-full items-center justify-between md:my-18">
         <Skeleton className="h-8 w-8 rounded-full" />
         <Skeleton className="mx-4 h-0.5 flex-1" />
         <Skeleton className="h-8 w-8 rounded-full" />
