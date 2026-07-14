@@ -153,6 +153,7 @@
   }
   html {
     @apply font-sans;
+    scrollbar-width: thin;
   }
 
   h1 {
