@@ -8,8 +8,8 @@ import React from 'react';
 
 const stats = [
   { label: 'Active Members', value: '50+', icon: Zap },
-  { label: 'IoT Projects', value: '12', icon: Cpu },
-  { label: 'Competitions', value: '8', icon: Trophy },
+  { label: 'IoT Projects', value: '12+', icon: Cpu },
+  { label: 'Competitions', value: '8+', icon: Trophy },
 ];
 
 export default function AboutSection() {

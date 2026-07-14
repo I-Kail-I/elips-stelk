@@ -19,7 +19,9 @@ jest.mock('@/common/prisma/prisma.service', () => ({
   })),
 }));
 
-function createMockVisiDanMisi(overrides: Partial<ResponseVisiDanMisiDto> = {}): ResponseVisiDanMisiDto {
+function createMockVisiDanMisi(
+  overrides: Partial<ResponseVisiDanMisiDto> = {},
+): ResponseVisiDanMisiDto {
   return {
     visi: 'Menjadi organisasi terbaik',
     misi: 'Melaksanakan program kerja',
@@ -32,7 +34,9 @@ function createMockVisiDanMisi(overrides: Partial<ResponseVisiDanMisiDto> = {}):
   };
 }
 
-function createMockCreateVisiDanMisiDto(overrides: Partial<CreateVisiDanMisiDto> = {}): CreateVisiDanMisiDto {
+function createMockCreateVisiDanMisiDto(
+  overrides: Partial<CreateVisiDanMisiDto> = {},
+): CreateVisiDanMisiDto {
   return {
     visi: 'Menjadi organisasi terbaik',
     misi: 'Melaksanakan program kerja',
@@ -43,7 +47,9 @@ function createMockCreateVisiDanMisiDto(overrides: Partial<CreateVisiDanMisiDto>
   };
 }
 
-function createMockUpdateVisiDanMisiDto(overrides: Partial<UpdateVisiDanMisiDto> = {}): UpdateVisiDanMisiDto {
+function createMockUpdateVisiDanMisiDto(
+  overrides: Partial<UpdateVisiDanMisiDto> = {},
+): UpdateVisiDanMisiDto {
   return {
     visi: 'Visi yang diperbarui',
     misi: 'Misi yang diperbarui',

@@ -1,11 +1,9 @@
-import { Injectable, NotFoundException, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { CreateVisiDanMisiDto } from './dto/create-visi-dan-misi.dto';
 import { ResponseVisiDanMisiDto } from './dto/response-visi-dan-misi.dto';
 import { UpdateVisiDanMisiDto } from './dto/update-visi-dan-misi.dto';
 
-@UseGuards(JwtAuthGuard)
 @Injectable()
 export class VisiDanMisiService {
   constructor(private readonly prisma: PrismaService) {}

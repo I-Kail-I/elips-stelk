@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ResponseVisiDanMisiDto } from './dto/response-visi-dan-misi.dto';
 import { CreateVisiDanMisiDto } from './dto/create-visi-dan-misi.dto';
+import { ResponseVisiDanMisiDto } from './dto/response-visi-dan-misi.dto';
 import { UpdateVisiDanMisiDto } from './dto/update-visi-dan-misi.dto';
 import { VisiDanMisiController } from './visi-dan-misi.controller';
 import { VisiDanMisiService } from './visi-dan-misi.service';
@@ -23,7 +23,9 @@ jest.mock('@/auth/jwt-auth.guard', () => ({
   })),
 }));
 
-function createMockResponse(overrides: Partial<ResponseVisiDanMisiDto> = {}): ResponseVisiDanMisiDto {
+function createMockResponse(
+  overrides: Partial<ResponseVisiDanMisiDto> = {},
+): ResponseVisiDanMisiDto {
   return {
     visi: 'Menjadi organisasi terbaik',
     misi: 'Melaksanakan program kerja',
@@ -33,7 +35,7 @@ function createMockResponse(overrides: Partial<ResponseVisiDanMisiDto> = {}): Re
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
-  } as ResponseVisiDanMisiDto;
+  };
 }
 
 function createMockCreateDto(overrides: Partial<CreateVisiDanMisiDto> = {}): CreateVisiDanMisiDto {
@@ -71,7 +73,9 @@ describe('VisiDanMisiController', () => {
     }).compile();
 
     controller = module.get<VisiDanMisiController>(VisiDanMisiController);
-    visiDanMisiService = module.get<VisiDanMisiService>(VisiDanMisiService) as jest.Mocked<VisiDanMisiService>;
+    visiDanMisiService = module.get<VisiDanMisiService>(
+      VisiDanMisiService,
+    ) as jest.Mocked<VisiDanMisiService>;
   });
 
   it('should be defined', () => {

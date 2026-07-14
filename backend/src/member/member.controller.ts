@@ -47,7 +47,6 @@ export class MemberController {
     return this.memberService.create(createMemberDto);
   }
 
-  // Add this to handle trailing slash
   @UseGuards(JwtAuthGuard)
   @Post('/')
   @UseInterceptors(
@@ -74,6 +73,7 @@ export class MemberController {
     return this.memberService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.memberService.findOne(+id);
@@ -93,6 +93,7 @@ export class MemberController {
       }),
     }),
   )
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateMemberDto: UpdateMemberDto,

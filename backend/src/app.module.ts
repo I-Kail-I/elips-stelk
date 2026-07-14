@@ -9,6 +9,7 @@ import { PrismaModule } from './common/prisma/prisma.module';
 import { FilesController } from './files/files.controller';
 import { HealthController } from './health/health.controller';
 import { MemberModule } from './member/member.module';
+import { SejarahModule } from './sejarah/sejarah.module';
 import { UserModule } from './user/user.module';
 import { isProduction } from './utils/check-env';
 import { VisiDanMisiModule } from './visi-dan-misi/visi-dan-misi.module';
@@ -52,6 +53,7 @@ import { VisiDanMisiModule } from './visi-dan-misi/visi-dan-misi.module';
     ActivityModule,
     UserModule,
     VisiDanMisiModule,
+    SejarahModule,
   ],
   providers: [
     {

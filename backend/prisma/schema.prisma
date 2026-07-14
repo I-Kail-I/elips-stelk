@@ -70,3 +70,14 @@ model Visi_dan_misi {
   @@map("visi_dan_misi")
   @@schema("public")
 }
+
+model sejarah {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+
+  @@map("sejarah")
+  @@schema("public")
+}
