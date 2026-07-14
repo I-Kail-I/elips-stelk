@@ -11,8 +11,8 @@ interface EmptyStateProps {
 
 export function EmptyState({
   icon,
-  title = "Belum ada anggota terdaftar",
-  description = "Anggota akan muncul di sini setelah ditambahkan",
+  title = 'Belum ada anggota terdaftar',
+  description = 'Anggota akan muncul di sini setelah ditambahkan',
 }: EmptyStateProps) {
   return (
     <motion.div
@@ -20,7 +20,7 @@ export function EmptyState({
       animate={{ opacity: 1, scale: 1 }}
       className="col-span-full flex flex-col items-center justify-center py-16"
     >
-      <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-border">
+      <div className="bg-muted border-border mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2">
         {icon || <UserPlus className="text-muted-foreground h-7 w-7" strokeWidth={1.5} />}
       </div>
       <p className="text-muted-foreground text-sm font-medium">{title}</p>

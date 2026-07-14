@@ -34,7 +34,7 @@ export class ActivityService {
 
     return this.prisma.activity.findMany({
       orderBy,
-      ...((limit != null) ? { take: limit } : {}),
+      ...(limit != null ? { take: limit } : {}),
     });
   }
 

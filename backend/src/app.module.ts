@@ -11,6 +11,7 @@ import { HealthController } from './health/health.controller';
 import { MemberModule } from './member/member.module';
 import { UserModule } from './user/user.module';
 import { isProduction } from './utils/check-env';
+import { VisiDanMisiModule } from './visi-dan-misi/visi-dan-misi.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { isProduction } from './utils/check-env';
     MemberModule,
     ActivityModule,
     UserModule,
+    VisiDanMisiModule,
   ],
   providers: [
     {

@@ -12,7 +12,12 @@ import {
 } from '@/components/ui/carousel';
 
 export function HeroSlider() {
-  const images = ['/home/IMG_4252.JPG', '/home/IMG_4253.JPG', '/home/IMG_4254.JPG', '/home/IMG_4255.JPG'];
+  const images = [
+    '/home/IMG_4252.JPG',
+    '/home/IMG_4253.JPG',
+    '/home/IMG_4254.JPG',
+    '/home/IMG_4255.JPG',
+  ];
 
   return (
     <div className="w-full">

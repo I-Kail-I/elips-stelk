@@ -54,11 +54,16 @@ describe('AuthController', () => {
         last_name: 'Doe',
       };
       const res = mockResponse();
-      mockAuthService.register.mockResolvedValue({ user: { email: dto.email, first_name: dto.first_name, last_name: dto.last_name }, token: 'jwt-token' });
+      mockAuthService.register.mockResolvedValue({
+        user: { email: dto.email, first_name: dto.first_name, last_name: dto.last_name },
+        token: 'jwt-token',
+      });
 
       const result = await controller.register(dto, res);
 
-      expect(result).toEqual({ user: { email: dto.email, first_name: dto.first_name, last_name: dto.last_name } });
+      expect(result).toEqual({
+        user: { email: dto.email, first_name: dto.first_name, last_name: dto.last_name },
+      });
       expect(res.cookie).toHaveBeenCalledWith('access_token', 'jwt-token', expect.any(Object));
     });
   });
@@ -67,7 +72,10 @@ describe('AuthController', () => {
     it('should set a cookie and return user without token', async () => {
       const loginDto = { email: 'test@example.com', password: '123456' };
       const res = mockResponse();
-      mockAuthService.login.mockResolvedValue({ user: { email: 'test@example.com' }, token: 'jwt-token' });
+      mockAuthService.login.mockResolvedValue({
+        user: { email: 'test@example.com' },
+        token: 'jwt-token',
+      });
 
       const result = await controller.login(loginDto, res);
 

@@ -1,4 +1,4 @@
-import { MemberCardSkeleton } from "./member-card";
+import { MemberCardSkeleton } from './member-card';
 
 export function LoadingGrid() {
   return (

@@ -120,6 +120,6 @@ export default antfu(
   },
   // ===== IGNORES =====
   {
-    ignores: ['**/generated/**', '**/node_modules/**', '**/dist/**', '**/.git/**', "**/.kilo**"],
+    ignores: ['**/generated/**', '**/node_modules/**', '**/dist/**', '**/.git/**', '**/.kilo**'],
   },
 );

@@ -34,7 +34,9 @@ export class AuthService {
     return this.jwtService.sign(payload);
   }
 
-  async register(createAuthDto: CreateAuthDto): Promise<{ user: Omit<User, 'password'>; token: string }> {
+  async register(
+    createAuthDto: CreateAuthDto,
+  ): Promise<{ user: Omit<User, 'password'>; token: string }> {
     const hashedPassword = await hashPassword(createAuthDto.password);
 
     const checkEmail = await this.prisma.user.findUnique({

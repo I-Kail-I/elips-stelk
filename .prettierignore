@@ -1,0 +1,14 @@
+# Build and output directories
+build/
+dist/
+out/
+
+# Lock files
+package-lock.json
+
+# Third-party code and assets
+vendor/
+public/libs/
+
+# File that want to be excluded
+backend/src/files/files.controller.spec.ts

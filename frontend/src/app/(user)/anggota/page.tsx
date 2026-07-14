@@ -17,7 +17,9 @@ export default function AnggotaPage() {
     if (!data) return { currentKetua: undefined, anggotaAktif: [], alumniKetua: [], alumni: [] };
 
     const currentKetua = data.find((m) => m.is_leader_active && m.role === 'ketua');
-    const anggotaAktif = data.filter((m) => !m.is_tamat && !(m.is_leader_active && m.role === 'ketua'));
+    const anggotaAktif = data.filter(
+      (m) => !m.is_tamat && !(m.is_leader_active && m.role === 'ketua'),
+    );
     const alumniKetua = data.filter((m) => m.is_tamat && m.role === 'ketua');
     const alumni = data.filter((m) => m.is_tamat && m.role !== 'ketua');
 
