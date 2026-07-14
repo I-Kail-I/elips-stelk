@@ -1,7 +1,7 @@
 'use client';
 
-import { Users } from 'lucide-react';
 import { useMemo } from 'react';
+import { ErrorSection } from '@/components/error-section';
 import { useMembers } from './_hooks/hooks.client';
 import { CurrentAnggotaSection } from './_sections/current-anggota-section';
 import { KetuaListSection } from './_sections/ketua-list-section';
@@ -43,31 +43,6 @@ function LoadingSkeleton() {
   );
 }
 
-function ErrorSection({ message }: { message?: string }) {
-  return (
-    <section className="relative overflow-hidden px-6 py-16 md:py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="border-border mb-12 border-b pb-6 text-center">
-          <p className="text-primary mb-2 text-xs font-bold tracking-[0.2em] uppercase">
-            Anggota Kami
-          </p>
-          <h2 className="font-heading text-3xl font-bold md:text-4xl">Data Anggota</h2>
-        </div>
-
-        <div className="flex flex-col items-center rounded-xl border-2 border-red-400/50 bg-red-50/50 p-8 text-center dark:bg-red-950/20">
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border-2 border-red-300 bg-red-100 dark:border-red-700">
-            <Users className="h-6 w-6 text-red-500" strokeWidth={1.5} />
-          </div>
-          <p className="text-sm font-semibold text-red-600 dark:text-red-400">
-            Gagal memuat data anggota
-          </p>
-          <p className="text-muted-foreground mt-1 text-xs">{message}</p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function AnggotaPage() {
   const { data, error, isError, isLoading } = useMembers();
 
@@ -86,7 +61,14 @@ export default function AnggotaPage() {
   }, [data]);
 
   if (isLoading) return <LoadingSkeleton />;
-  if (isError) return <ErrorSection message={error?.message} />;
+  if (isError)
+    return (
+      <ErrorSection
+        subtitle="Anggota Kami"
+        title="Data Anggota"
+        message={error?.message ?? 'Gagal memuat data anggota'}
+      />
+    );
 
   return (
     <>

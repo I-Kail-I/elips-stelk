@@ -1,6 +1,7 @@
 'use client';
 
 import Autoplay from 'embla-carousel-autoplay';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React from 'react';
 import {
@@ -20,7 +21,12 @@ export function HeroSlider() {
   ];
 
   return (
-    <div className="w-full">
+    <motion.div
+      className="w-full"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2, type: "tween" }}
+    >
       {/* Carousel Section */}
       <div className="relative mt-10 w-full">
         <Carousel
@@ -56,6 +62,6 @@ export function HeroSlider() {
           <CarouselNext className="right-4 z-10" />
         </Carousel>
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import React from 'react';
+import { ErrorSection } from '@/components/error-section';
 import { LatestActivity, LatestActivitySkeleton } from '../_components/latest-activity';
 import { useMember } from '../_hooks/hook.client';
 
@@ -37,14 +38,12 @@ export default function LatestSection() {
   // Error state
   if (isError) {
     return (
-      <section className="relative overflow-hidden px-6 py-16 md:py-24">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader />
-          <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-600">
-            Failed to load activities: {error?.message}
-          </div>
-        </div>
-      </section>
+      <ErrorSection
+        subtitle="Updates"
+        title="Latest Activity"
+        description="See our latest activity with Elips"
+        message={error?.message ?? 'Failed to load activities'}
+      />
     );
   }
 

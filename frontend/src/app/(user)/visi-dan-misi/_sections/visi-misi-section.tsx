@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { ErrorSection } from '@/components/error-section';
 import { Button } from '@/components/ui/button';
 import { SkeletonHeader } from '../_components/skeleton';
 import { VisiMisiCard, VisiMisiCardSkeleton } from '../_components/visi-misi-card';
@@ -42,14 +43,12 @@ export default function VisiMisiSection() {
 
   if (isError) {
     return (
-      <section className="relative overflow-hidden px-6 py-20 md:py-28">
-        <div className="mx-auto max-w-3xl">
-          <SkeletonHeader />
-          <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-600">
-            Gagal memuat visi dan misi: {error?.message}
-          </div>
-        </div>
-      </section>
+      <ErrorSection
+        subtitle="Tentang Kami"
+        title="Visi & Misi"
+        description="Visi dan misi yang menuntun setiap langkah Elips Robotics Club"
+        message={error?.message ?? 'Gagal memuat visi dan misi'}
+      />
     );
   }
 
