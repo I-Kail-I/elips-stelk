@@ -56,3 +56,17 @@ model Member {
   @@map("membersRole")
   @@schema("public")
 }
+
+model Visi_dan_misi {
+  id          Int       @id @default(autoincrement())
+  tahun_mulai Int
+  tahun_akhir Int
+  visi        String    @db.Text
+  misi        String    @db.Text
+  is_active   Boolean
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+
+  @@map("visi_dan_misi")
+  @@schema("public")
+}
