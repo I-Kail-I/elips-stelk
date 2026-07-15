@@ -22,7 +22,7 @@ function createMockActivity(overrides = {}) {
     title: 'Test Activity',
     description: 'Test Description',
     date: new Date(),
-    image: [],
+    cover_image: null,
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
@@ -34,7 +34,6 @@ function createMockCreateActivityDto(overrides = {}) {
     title: 'Test Activity',
     description: 'Test Description',
     date: new Date(),
-    image: [],
     ...overrides,
   };
 }
@@ -44,7 +43,6 @@ function createMockUpdateActivityDto(overrides = {}) {
     title: 'Updated Activity',
     description: 'Updated Description',
     date: new Date(),
-    image: [],
     ...overrides,
   };
 }

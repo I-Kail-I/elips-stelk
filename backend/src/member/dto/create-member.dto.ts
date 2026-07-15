@@ -28,9 +28,8 @@ export class CreateMemberDto {
   @IsNotEmpty()
   message!: string;
 
-  @ApiPropertyOptional({ type: [String] })
+  @ApiPropertyOptional()
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  image?: string[];
+  @IsString()
+  cover_image?: string;
 }

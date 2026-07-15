@@ -1,4 +1,3 @@
-import { extname } from 'node:path';
 import {
   Body,
   Controller,
@@ -8,12 +7,8 @@ import {
   Patch,
   Post,
   Query,
-  UploadedFiles,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
 import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
@@ -43,50 +38,13 @@ export class ActivityController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  @UseInterceptors(
-    FilesInterceptor('images', 10, {
-      storage: diskStorage({
-        destination: './uploads_folder',
-        filename: (req, file, callback) => {
-          const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-          const ext = extname(file.originalname);
-          callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-        },
-      }),
-    }),
-  )
-  async create(
-    @Body() createActivityDto: CreateActivityDto,
-    @UploadedFiles() files?: Express.Multer.File[],
-  ) {
-    if (files && files.length > 0) {
-      createActivityDto.image = files.map((file) => file.path);
-    }
+  async create(@Body() createActivityDto: CreateActivityDto) {
     return this.activityService.create(createActivityDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  @UseInterceptors(
-    FilesInterceptor('images', 10, {
-      storage: diskStorage({
-        destination: './uploads_folder',
-        filename: (req, file, callback) => {
-          const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-          const ext = extname(file.originalname);
-          callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-        },
-      }),
-    }),
-  )
-  async update(
-    @Param('id') id: string,
-    @Body() updateActivityDto: UpdateActivityDto,
-    @UploadedFiles() files?: Express.Multer.File[],
-  ) {
-    if (files && files.length > 0) {
-      updateActivityDto.image = files.map((file) => file.path);
-    }
+  async update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
     return this.activityService.update(+id, updateActivityDto);
   }
 

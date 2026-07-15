@@ -12,11 +12,10 @@ export class CreateActivityDto {
   @IsNotEmpty()
   description!: string;
 
-  @ApiPropertyOptional({ type: [String] })
+  @ApiPropertyOptional()
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  image?: string[];
+  @IsString()
+  cover_image?: string;
 
   @ApiProperty()
   @IsString()

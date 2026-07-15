@@ -16,9 +16,8 @@ export class ActivityService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createActivityDto: CreateActivityDto): Promise<ResponseActivityDto> {
-    const { image, ...rest } = createActivityDto;
     return this.prisma.activity.create({
-      data: { ...rest, image: image ?? [] },
+      data: createActivityDto,
     });
   }
 

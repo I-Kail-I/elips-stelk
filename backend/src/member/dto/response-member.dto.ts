@@ -14,7 +14,7 @@ export class ResponseMemberDto {
   message!: string;
 
   @Expose()
-  image!: string[];
+  cover_image?: string;
 
   @Expose()
   is_leader_active!: boolean;

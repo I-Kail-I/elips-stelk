@@ -9,9 +9,8 @@ export class MemberService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createMemberDto: CreateMemberDto): Promise<ResponseMemberDto> {
-    const { image, ...rest } = createMemberDto;
     return this.prisma.member.create({
-      data: { ...rest, image: image ?? [] },
+      data: createMemberDto,
     });
   }
 
