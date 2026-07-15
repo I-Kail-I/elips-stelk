@@ -12,10 +12,20 @@ interface Props {
 export default function PageTransition({ children, color = '#0f0f0f', duration = 0.8 }: Props) {
   return (
     <div style={{ position: 'relative', width: '100%', minHeight: '100vh' }}>
-      {/* Content - always rendered, revealed as overlay moves */}
-      <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
+      {/* SSR-Friendly Content Container */}
+      <motion.div
+        initial={{ opacity: 0, visibility: 'hidden' }}
+        animate={{ opacity: 1, visibility: 'visible' }}
+        transition={{
+          delay: duration,
+          duration: 0.3,
+          ease: 'easeOut',
+        }}
+        style={{ position: 'relative', zIndex: 1 }}
+      >
+        {children}
+      </motion.div>
 
-      {/* Animated overlay */}
       <motion.div
         initial={{ y: '0%' }}
         animate={{ y: '-100%' }}
