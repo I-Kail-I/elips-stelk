@@ -6,7 +6,7 @@ export const ActivitySchema = z.array(
     title: string(),
     description: string(),
     markdown_file: string(),
-    image: z.array(string()),
+    cover_image: string().nullable(),
     created_at: z.string().datetime(),
     updated_at: z.string().datetime(),
   }),

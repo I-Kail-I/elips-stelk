@@ -25,7 +25,7 @@ export function MemberGrid({ members, emptyStateProps }: MemberGridProps) {
           key={member.id}
           name={member.name}
           role={member.role}
-          image={member.image}
+          cover_image={member.cover_image}
           created_at={member.created_at}
           index={i}
         />

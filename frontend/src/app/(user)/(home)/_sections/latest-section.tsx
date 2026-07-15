@@ -67,7 +67,7 @@ export default function LatestSection() {
           {data && Array.isArray(data) && data.length > 0 ? (
             data.map((activity, i) => {
               const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-              const imagePath = activity.image?.[0];
+              const imagePath = activity.cover_image;
 
               const imageUrl = imagePath
                 ? imagePath.startsWith('http')

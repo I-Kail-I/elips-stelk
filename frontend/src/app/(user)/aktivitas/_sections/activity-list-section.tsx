@@ -76,7 +76,7 @@ export function ActivityListSection({ activities }: { activities: ActivityType[]
               <ActivityCard
                 title={activity.title}
                 description={activity.description}
-                image={activity.image}
+                cover_image={activity.cover_image}
                 created_at={activity.created_at}
                 index={i}
               />

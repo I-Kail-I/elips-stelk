@@ -9,13 +9,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 interface MemberCardProps {
   name: string;
   role: string;
-  image: string[];
+  cover_image: string | null;
   created_at: string;
   index?: number;
 }
 
-export function MemberCard({ name, role, image, created_at, index = 0 }: MemberCardProps) {
-  const imageUrl = image?.[0] ?? '';
+export function MemberCard({ name, role, cover_image, created_at, index = 0 }: MemberCardProps) {
+  const imageUrl = cover_image ?? '';
 
   return (
     <motion.article

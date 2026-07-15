@@ -26,7 +26,7 @@ export function KetuaListSection({ alumni }: { alumni: MemberType[] }) {
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:gap-6">
           {alumni.map((member, i) => {
-            const imageUrl = member.image?.[0] ?? '';
+            const imageUrl = member.cover_image ?? '';
             return (
               <motion.article
                 key={member.id}

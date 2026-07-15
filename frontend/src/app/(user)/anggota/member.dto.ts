@@ -5,7 +5,7 @@ export const MemberSchema = z.object({
   name: string(),
   role: string(),
   message: string(),
-  image: z.array(string()),
+  cover_image: string().nullable(),
   is_leader_active: boolean(),
   is_tamat: z.boolean(),
   created_at: z.string().datetime(),
