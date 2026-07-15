@@ -1,10 +1,11 @@
 'use client';
 
-import { LayoutDashboard, Menu, X } from 'lucide-react';
+import { LayoutDashboard, LogOut, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { logout } from '@/app/admin/_lib/auth-api';
 import { Button } from '../ui/button';
 import { ModeToggle } from '../ui/mode-toggle';
 
@@ -20,7 +21,20 @@ const navItems = [
 export default function AdminNavbar() {
   const [screenIsMoving, setScreenIsMoving] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const route = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    try {
+      await logout();
+    } catch {
+      // still redirect even if the request fails
+    }
+    router.push('/admin/login');
+    router.refresh();
+  };
 
   useEffect(() => {
     if (window.scrollY >= 5) {
@@ -86,6 +100,15 @@ export default function AdminNavbar() {
               </Link>
             );
           })}
+          <Button
+            variant="ghost"
+            onClick={handleLogout}
+            disabled={loggingOut}
+            className="cursor-pointer hover:bg-transparent"
+            aria-label="Logout"
+          >
+            <LogOut size={18} />
+          </Button>
           <ModeToggle />
         </div>
 
@@ -139,6 +162,17 @@ export default function AdminNavbar() {
                   </Link>
                 );
               })}
+              <div className="border-border my-2 border-t pt-2">
+                <Button
+                  variant="ghost"
+                  onClick={handleLogout}
+                  disabled={loggingOut}
+                  className="w-full justify-start text-lg text-red-500 hover:bg-red-500/10"
+                >
+                  <LogOut size={18} className="mr-2" />
+                  Keluar
+                </Button>
+              </div>
             </div>
           </div>
         </div>

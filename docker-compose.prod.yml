@@ -59,7 +59,7 @@ services:
       start_period: 5s
     volumes:
       - uploads_folder:/app/uploads_folder
-    command: sh -c "npm run db:migrate-prod && npm start"
+    command: sh -c "npm run db:migrate-prod && npm run start:prod"
 
   frontend:
     build:
@@ -81,6 +81,7 @@ services:
       - NEXT_PUBLIC_API_PREFIX=${NEXT_PUBLIC_API_PREFIX}
       - PORT=${FRONTEND_PORT}
       - NODE_ENV=${NODE_ENV}
+      - JWT_SECRET=${JWT_SECRET}
 
 volumes:
   caddy_data:

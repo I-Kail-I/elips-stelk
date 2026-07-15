@@ -8,7 +8,7 @@ export const ActivitySchema = z.array(
     markdown_file: string(),
     cover_image: string().nullable(),
     created_at: z.string().datetime(),
-    updated_at: z.string().datetime(),
+    updated_at: z.string().datetime().nullable(),
   }),
 );
 
