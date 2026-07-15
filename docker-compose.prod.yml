@@ -59,6 +59,7 @@ services:
       start_period: 5s
     volumes:
       - uploads_folder:/app/uploads_folder
+    command: sh -c "npm run db:migrate-prod && npm start"
 
   frontend:
     build:
