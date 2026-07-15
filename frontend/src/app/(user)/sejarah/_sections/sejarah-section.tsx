@@ -1,35 +1,18 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ErrorSection } from '@/components/error-section';
 import { SejarahTimelineCard } from '../_components/sejarah-timeline-card';
-
-const timelineData = [
-  {
-    id: 1,
-    title: 'Berdirinya Elips Robotics Club',
-    description:
-      'Elips Robotics Club resmi didirikan sebagai wadah pengembangan minat dan bakat di bidang robotika.',
-  },
-  {
-    id: 2,
-    title: 'Juara 1 Kontes Robot Indonesia',
-    description: 'Tim berhasil meraih juara pertama dalam Kontes Robot Indonesia tingkat nasional.',
-  },
-  {
-    id: 3,
-    title: 'Workshop Robotika Nasional',
-    description:
-      'Menyelenggarakan workshop robotika yang diikuti oleh puluhan peserta dari berbagai daerah.',
-  },
-  {
-    id: 4,
-    title: 'Peluncuran Program Robot Edukasi',
-    description:
-      'Meluncurkan program edukasi robotika untuk siswa sekolah menengah sebagai bentuk pengabdian masyarakat.',
-  },
-];
+import { SejarahSectionSkeleton } from '../_components/skeleton';
+import { useSejarah } from '../_hooks/hook.client';
 
 export default function SejarahSection() {
+  const { data, isLoading, error } = useSejarah();
+
+  if (error) {
+    return <ErrorSection message="Gagal memuat data sejarah" />;
+  }
+
   return (
     <section className="relative overflow-hidden px-6 py-20 md:py-28">
       <motion.div
@@ -60,24 +43,28 @@ export default function SejarahSection() {
           </p>
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-40px' }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
-          }}
-        >
-          {timelineData.map((item, i) => (
-            <SejarahTimelineCard
-              key={item.id}
-              title={item.title}
-              description={item.description}
-              index={i}
-            />
-          ))}
-        </motion.div>
+        {isLoading ? (
+          <SejarahSectionSkeleton />
+        ) : (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+            }}
+          >
+            {data?.map((item, i) => (
+              <SejarahTimelineCard
+                key={item.id}
+                title={item.title}
+                description={item.description}
+                index={i}
+              />
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   );

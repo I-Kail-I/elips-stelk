@@ -1,4 +1,3 @@
-import { Readable } from 'node:stream';
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ActivityController } from './activity.controller';
@@ -22,38 +21,13 @@ jest.mock('@/auth/jwt-auth.guard', () => ({
   })),
 }));
 
-jest.mock('@nestjs/platform-express', () => ({
-  FilesInterceptor: jest.fn().mockReturnValue(jest.fn()),
-}));
-
-jest.mock('multer', () => ({
-  diskStorage: jest.fn().mockReturnValue({}),
-}));
-
-function createMockUploadedFile(overrides = {}): Express.Multer.File {
-  return {
-    fieldname: 'images',
-    originalname: 'test-image.jpg',
-    encoding: '7bit',
-    mimetype: 'image/jpeg',
-    size: 1024,
-    destination: './uploads_folder',
-    filename: 'images-1234567890-987654321.jpg',
-    path: 'uploads_folder/images-1234567890-987654321.jpg',
-    // eslint-disable-next-line node/prefer-global/buffer
-    buffer: Buffer.from('test file content'),
-    stream: Readable.from(['test file content']),
-    ...overrides,
-  };
-}
-
 function createMockActivity(overrides = {}) {
   return {
     id: 1,
     title: 'Test Activity',
     description: 'Activity description',
     markdown_file: '# Markdown content',
-    image: [],
+    cover_image: null,
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
@@ -65,7 +39,6 @@ function createMockCreateActivityDto(overrides = {}) {
     title: 'Test Activity',
     description: 'Activity description',
     markdown_file: '# Markdown content',
-    image: [],
     ...overrides,
   };
 }
@@ -100,42 +73,17 @@ describe('ActivityController', () => {
   });
 
   describe('create', () => {
-    it('should create a new activity without files', async () => {
+    it('should create a new activity', async () => {
       const createActivityDto: CreateActivityDto = createMockCreateActivityDto();
       const expectedResult = createMockActivity(createActivityDto);
 
       jest.spyOn(activityService, 'create').mockResolvedValue(expectedResult);
 
-      const result = await controller.create(createActivityDto, []);
+      const result = await controller.create(createActivityDto);
 
       expect(result).toEqual(expectedResult);
       expect(activityService.create).toHaveBeenCalledWith(createActivityDto);
       expect(activityService.create).toHaveBeenCalledTimes(1);
-    });
-
-    it('should create activity with uploaded image files', async () => {
-      const createActivityDto: CreateActivityDto = createMockCreateActivityDto({
-        image: undefined,
-      });
-      const mockFiles = [
-        createMockUploadedFile({ path: 'uploads_folder/images-abc.jpg' }),
-        createMockUploadedFile({ path: 'uploads_folder/images-def.jpg' }),
-      ];
-      const expectedData = {
-        ...createActivityDto,
-        image: ['uploads_folder/images-abc.jpg', 'uploads_folder/images-def.jpg'],
-      };
-      const expectedResult = createMockActivity(expectedData);
-
-      jest.spyOn(activityService, 'create').mockResolvedValue(expectedResult);
-
-      const result = await controller.create(createActivityDto, mockFiles);
-
-      expect(result.image).toEqual([
-        'uploads_folder/images-abc.jpg',
-        'uploads_folder/images-def.jpg',
-      ]);
-      expect(activityService.create).toHaveBeenCalledWith(expectedData);
     });
 
     it('should create activity with different data', async () => {
@@ -148,7 +96,7 @@ describe('ActivityController', () => {
 
       jest.spyOn(activityService, 'create').mockResolvedValue(expectedResult);
 
-      const result = await controller.create(createActivityDto, []);
+      const result = await controller.create(createActivityDto);
 
       expect(result.title).toBe('Workshop');
       expect(result.description).toBe('A coding workshop');
@@ -222,35 +170,18 @@ describe('ActivityController', () => {
   });
 
   describe('update', () => {
-    it('should update an activity without files', async () => {
+    it('should update an activity', async () => {
       const activityId = '1';
       const updateActivityDto: UpdateActivityDto = createMockUpdateActivityDto();
       const expectedResult = createMockActivity({ id: 1, ...updateActivityDto });
 
       jest.spyOn(activityService, 'update').mockResolvedValue(expectedResult);
 
-      const result = await controller.update(activityId, updateActivityDto, []);
+      const result = await controller.update(activityId, updateActivityDto);
 
       expect(result).toEqual(expectedResult);
       expect(activityService.update).toHaveBeenCalledWith(1, updateActivityDto);
       expect(activityService.update).toHaveBeenCalledTimes(1);
-    });
-
-    it('should update an activity with uploaded image files', async () => {
-      const activityId = '1';
-      const updateActivityDto: UpdateActivityDto = createMockUpdateActivityDto({
-        image: undefined,
-      });
-      const mockFiles = [createMockUploadedFile({ path: 'uploads_folder/images-new.jpg' })];
-      const expectedData = { ...updateActivityDto, image: ['uploads_folder/images-new.jpg'] };
-      const expectedResult = createMockActivity({ id: 1, ...expectedData });
-
-      jest.spyOn(activityService, 'update').mockResolvedValue(expectedResult);
-
-      const result = await controller.update(activityId, updateActivityDto, mockFiles);
-
-      expect(result.image).toEqual(['uploads_folder/images-new.jpg']);
-      expect(activityService.update).toHaveBeenCalledWith(1, expectedData);
     });
 
     it('should update with partial data', async () => {
@@ -260,7 +191,7 @@ describe('ActivityController', () => {
 
       jest.spyOn(activityService, 'update').mockResolvedValue(expectedResult);
 
-      const result = await controller.update(activityId, partialUpdate, []);
+      const result = await controller.update(activityId, partialUpdate);
 
       expect(result.title).toBe('Updated Title');
       expect(activityService.update).toHaveBeenCalledWith(1, partialUpdate);
@@ -274,7 +205,7 @@ describe('ActivityController', () => {
         .spyOn(activityService, 'update')
         .mockRejectedValue(new NotFoundException('Activity tidak ditemukan'));
 
-      await expect(controller.update(activityId, updateActivityDto, [])).rejects.toThrow(
+      await expect(controller.update(activityId, updateActivityDto)).rejects.toThrow(
         NotFoundException,
       );
     });
@@ -286,7 +217,7 @@ describe('ActivityController', () => {
 
       jest.spyOn(activityService, 'update').mockResolvedValue(expectedResult);
 
-      await controller.update(activityId, updateActivityDto, []);
+      await controller.update(activityId, updateActivityDto);
 
       expect(activityService.update).toHaveBeenCalledWith(10, updateActivityDto);
     });

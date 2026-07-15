@@ -1,6 +1,7 @@
 import z from 'zod';
 
 export const VisiDanMisiSchema = z.object({
+  id: z.number(),
   visi: z.string(),
   misi: z.string(),
   is_active: z.boolean(),

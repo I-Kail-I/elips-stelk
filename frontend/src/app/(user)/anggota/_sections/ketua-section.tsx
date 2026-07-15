@@ -10,7 +10,7 @@ interface KetuaSectionProps {
 }
 
 export function KetuaSection({ ketua }: KetuaSectionProps) {
-  const imageUrl = ketua.image?.[0] ?? '';
+  const imageUrl = ketua.cover_image ?? '';
 
   return (
     <section className="relative overflow-hidden px-6 py-16 md:py-24">

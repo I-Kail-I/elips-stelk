@@ -34,7 +34,7 @@ model Activity {
   title         String
   description   String
   markdown_file String    @db.Text
-  image         String[]  @db.Text
+  cover_image   String?   @db.Text
   created_at    DateTime  @default(now())
   updated_at    DateTime? @updatedAt
 
@@ -47,7 +47,7 @@ model Member {
   name             String
   role             MemberRole
   message          String     @db.Text
-  image            String[]   @db.Text
+  cover_image      String?    @db.Text
   is_leader_active Boolean    @default(false)
   is_tamat         Boolean    @default(false)
   created_at       DateTime   @default(now())

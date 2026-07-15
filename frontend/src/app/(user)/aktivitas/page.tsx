@@ -11,7 +11,7 @@ export default function AktivitasPage() {
   const { data, error, isError, isLoading } = useActivities();
 
   if (isLoading) return <ActivityListSectionSkeleton />;
-  if (isError)
+  if (isError) {
     return (
       <ErrorSection
         subtitle="Aktivitas"
@@ -19,6 +19,7 @@ export default function AktivitasPage() {
         message={error?.message ?? 'Gagal memuat data aktivitas'}
       />
     );
+  }
 
   return <ActivityListSection activities={data ?? []} />;
 }

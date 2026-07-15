@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsBoolean, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { MemberRole } from '@/generated/prisma/enums';
 
 export class CreateMemberDto {
@@ -28,9 +28,8 @@ export class CreateMemberDto {
   @IsNotEmpty()
   message!: string;
 
-  @ApiPropertyOptional({ type: [String] })
+  @ApiPropertyOptional()
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  image?: string[];
+  @IsString()
+  cover_image?: string;
 }

@@ -1,4 +1,3 @@
-/* eslint-disable ts/no-unsafe-assignment, ts/no-unsafe-argument */
 import type { sejarahModel } from '@/generated/prisma/models';
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';

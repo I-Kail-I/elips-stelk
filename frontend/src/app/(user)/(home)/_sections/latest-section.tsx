@@ -66,14 +66,7 @@ export default function LatestSection() {
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:gap-6">
           {data && Array.isArray(data) && data.length > 0 ? (
             data.map((activity, i) => {
-              const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-              const imagePath = activity.image?.[0];
-
-              const imageUrl = imagePath
-                ? imagePath.startsWith('http')
-                  ? imagePath
-                  : `${API_BASE_URL}/${imagePath}`
-                : '';
+              const imageUrl = activity.cover_image ?? '';
 
               return (
                 <motion.div

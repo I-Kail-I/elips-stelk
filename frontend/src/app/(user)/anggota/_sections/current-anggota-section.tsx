@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { MemberCard } from '../_components/member-card';
 
 function KetuaHero({ ketua }: { ketua: MemberType }) {
-  const imageUrl = ketua.image?.[0] ?? '';
+  const imageUrl = ketua.cover_image ?? '';
 
   return (
     <motion.div
@@ -110,7 +110,7 @@ export function CurrentAnggotaSection({
                 <MemberCard
                   name={member.name}
                   role={member.role}
-                  image={member.image}
+                  cover_image={member.cover_image}
                   created_at={member.created_at}
                 />
               </motion.div>

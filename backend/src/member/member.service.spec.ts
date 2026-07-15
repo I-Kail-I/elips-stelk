@@ -25,7 +25,7 @@ function createMockMember(overrides: Partial<Member> = {}): Member {
     name: 'John Doe',
     role: MemberRole.anggota,
     message: 'Hello, I want to join',
-    image: [],
+    cover_image: null,
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
@@ -37,7 +37,6 @@ function createMockCreateMemberDto(overrides: Partial<CreateMemberDto> = {}): Cr
     name: 'John Doe',
     role: MemberRole.anggota,
     message: 'Hello, I want to join',
-    image: [],
     ...overrides,
   };
 }
@@ -47,7 +46,6 @@ function createMockUpdateMemberDto(overrides: Partial<UpdateMemberDto> = {}): Up
     name: 'Jane Doe',
     role: MemberRole.ketua,
     message: 'Updated message',
-    image: [],
     ...overrides,
   };
 }
@@ -72,7 +70,7 @@ describe('MemberService', () => {
   });
 
   describe('create', () => {
-    it('should create and return a new member without images', async () => {
+    it('should create and return a new member', async () => {
       const createMemberDto = createMockCreateMemberDto();
       const mockCreatedMember = createMockMember(createMemberDto);
 
@@ -82,40 +80,8 @@ describe('MemberService', () => {
 
       expect(result).toEqual(mockCreatedMember);
       expect(prisma.member.create).toHaveBeenCalledWith({
-        data: { ...createMemberDto, image: [] },
+        data: createMemberDto,
       });
-    });
-
-    it('should create member with images', async () => {
-      const createMemberDto = createMockCreateMemberDto({
-        image: ['path/to/image1.jpg', 'path/to/image2.jpg'],
-      });
-
-      const mockCreatedMember = createMockMember(createMemberDto);
-
-      jest.spyOn(prisma.member, 'create').mockResolvedValue(mockCreatedMember);
-
-      const result = await service.create(createMemberDto);
-
-      expect(result.image).toEqual(['path/to/image1.jpg', 'path/to/image2.jpg']);
-      expect(result.image).toHaveLength(2);
-      expect(prisma.member.create).toHaveBeenCalledWith({
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        data: expect.objectContaining({
-          image: ['path/to/image1.jpg', 'path/to/image2.jpg'],
-        }),
-      });
-    });
-
-    it('should handle empty image array', async () => {
-      const createMemberDto = createMockCreateMemberDto({ image: [] });
-      const mockCreatedMember = createMockMember(createMemberDto);
-
-      jest.spyOn(prisma.member, 'create').mockResolvedValue(mockCreatedMember);
-
-      const result = await service.create(createMemberDto);
-
-      expect(result.image).toEqual([]);
     });
 
     it('should create member with all provided fields', async () => {
@@ -123,7 +89,6 @@ describe('MemberService', () => {
         name: 'Alice Smith',
         role: MemberRole.ketua,
         message: 'I want to be an admin',
-        image: ['admin-photo.jpg'],
       });
 
       const mockCreatedMember = createMockMember(createMemberDto);
@@ -135,16 +100,15 @@ describe('MemberService', () => {
       expect(result.name).toBe('Alice Smith');
       expect(result.role).toBe(MemberRole.ketua);
       expect(result.message).toBe('I want to be an admin');
-      expect(result.image).toEqual(['admin-photo.jpg']);
     });
   });
 
   describe('findAll', () => {
     it('should return an array of members', async () => {
       const mockMembers: Member[] = [
-        createMockMember({ id: 1, name: 'Member 1', image: ['img1.jpg'] }),
-        createMockMember({ id: 2, name: 'Member 2', image: ['img2.jpg'] }),
-        createMockMember({ id: 3, name: 'Member 3', image: [] }),
+        createMockMember({ id: 1, name: 'Member 1' }),
+        createMockMember({ id: 2, name: 'Member 2' }),
+        createMockMember({ id: 3, name: 'Member 3' }),
       ];
 
       jest.spyOn(prisma.member, 'findMany').mockResolvedValue(mockMembers);
@@ -153,8 +117,6 @@ describe('MemberService', () => {
 
       expect(result).toEqual(mockMembers);
       expect(result).toHaveLength(3);
-      expect(result[0].image).toEqual(['img1.jpg']);
-      expect(result[2].image).toEqual([]);
       expect(prisma.member.findMany).toHaveBeenCalled();
     });
 

@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 interface ActivityCardProps {
   title: string;
   description: string;
-  image: string[];
+  cover_image: string | null;
   created_at: string;
   index?: number;
 }
@@ -16,12 +16,11 @@ interface ActivityCardProps {
 export function ActivityCard({
   title,
   description,
-  image,
+  cover_image,
   created_at,
   index = 0,
 }: ActivityCardProps) {
-  const raw = image?.[0] ?? '';
-  const imageUrl = raw ? raw.replace(/^uploads_folder\//, '/api/uploads/') : '';
+  const imageUrl = cover_image ?? '';
 
   return (
     <motion.article
