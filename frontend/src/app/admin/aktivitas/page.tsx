@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpDown, Eye, Loader2, Pencil, Plus, Trash2 } from 'lucide-react';
+import { ArrowUpDown, Loader2, Pencil, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';

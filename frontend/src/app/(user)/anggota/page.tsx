@@ -61,7 +61,7 @@ export default function AnggotaPage() {
   }, [data]);
 
   if (isLoading) return <LoadingSkeleton />;
-  if (isError)
+  if (isError) {
     return (
       <ErrorSection
         subtitle="Anggota Kami"
@@ -69,6 +69,7 @@ export default function AnggotaPage() {
         message={error?.message ?? 'Gagal memuat data anggota'}
       />
     );
+  }
 
   return (
     <>

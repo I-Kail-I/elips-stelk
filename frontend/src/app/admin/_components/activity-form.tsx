@@ -1,12 +1,11 @@
-/* eslint-disable react/no-leaked-conditional-rendering */
 'use client';
 
 import type { ActivityType } from '@/app/(user)/aktivitas/activity.dto';
 import { ImagePlus, Loader2 } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { MarkdownEditor } from '@/components/markdown-editor';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { MarkdownEditor } from '@/components/markdown-editor';
 import { axiosInstance } from '@/lib/axios';
 
 interface Props {
